@@ -23,7 +23,7 @@ class Chart extends Component {
           options={{
             title: {
               display: this.props.displayTitle,
-              text: 'Largest Cities In Massachusetts',
+              text: 'San Francisco Crime Data',
               fontSize: 25
             },
             legend: {
