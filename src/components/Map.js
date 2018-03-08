@@ -1,26 +1,50 @@
-import React, {Component} from 'react';
-import ReactMapGL from 'react-map-gl';
+import React from 'react';
+import mapboxgl from 'mapbox-gl';
 
-const MAPBOX_TOKEN = 'pk.eyJ1IjoiZG9taW5pY2FiZWxhIiwiYSI6ImNqYzJ0Y2IyODA0YnAzMm4zN2p6YXN3NngifQ.pRPqhS3ZseAc4kvYUP4DEw';
+mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
-class Map extends Component {
+class Map extends React.Component {
 
-  state = {
-    viewport: {
-      width: 400,
-      height: 400,
-      latitude: 37.7577,
-      longitude: -122.4376,
-      zoom: 8
-    }
-  };
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      lng: 5,
+      lat: 34,
+      zoom: 1.5
+    };
+  }
+
+  componentDidMount() {
+    const { lng, lat, zoom } = this.state;
+
+    const map = new mapboxgl.Map({
+      container: this.mapContainer,
+      style: 'mapbox://styles/mapbox/streets-v9',
+      center: [lng, lat],
+      zoom
+    });
+
+    map.on('move', () => {
+      const { lng, lat } = map.getCenter();
+
+      this.setState({
+        lng: lng.toFixed(4),
+        lat: lat.toFixed(4),
+        zoom: map.getZoom().toFixed(2)
+      });
+    });
+  }
 
   render() {
+    const { lng, lat, zoom } = this.state;
+
     return (
-      <ReactMapGL
-        {...this.state.viewport}
-        onViewportChange={(viewport) => this.setState({viewport})}
-      />
+      <div>
+        <div className="inline-block absolute top left mt12 ml12 bg-darken75 color-white z1 py6 px12 round-full txt-s txt-bold">
+          <div>{`Longitude: ${lng} Latitude: ${lat} Zoom: ${zoom}`}</div>
+        </div>
+        <div ref={el => this.mapContainer = el} className="absolute top right left bottom" />
+      </div>
     );
   }
 }

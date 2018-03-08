@@ -104,6 +104,7 @@ class App extends Component {
         </div>
         <LineChart chartData={this.state.chartData} chartTitle="Hourly Crime Rate" legendPosition="right"/>
         <BarChart chartData={this.state.chartData2} chartTitle="Daily Crime Rate" legendPosition="right"/>
+        <Map />
       </div>
     );
   }
