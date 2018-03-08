@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-import {Bar, Line, Pie} from 'react-chartjs-2';
+import {Line} from 'react-chartjs-2';
 
-class Chart extends Component {
+class LineChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      chartData: props.chartData,
-      chartData2: props.chartData2
+      chartData: props.chartData
     }
   }
 
   static defaultProps = {
+    chartTitle: 'chart',
     displayTitle: true,
     displayLegend: true,
     legendPosition: 'right'
@@ -24,28 +24,7 @@ class Chart extends Component {
           options={{
             title: {
               display: this.props.displayTitle,
-              text: 'Hourly Crime Rate',
-              fontSize: 25,
-            },
-            legend: {
-              display: this.props.displayLegend,
-              position: this.props.legendPosition
-            },
-            maintainAspectRatio: true,
-      			spanGaps: false,
-      			scales: {
-      				yAxes: [{
-      					stacked: true
-      				}]
-      			},
-          }}
-        />
-        <Bar
-          data={this.state.chartData2}
-          options={{
-            title: {
-              display: this.props.displayTitle,
-              text: 'Daily Crime Rate',
+              text: this.props.chartTitle,
               fontSize: 25,
             },
             legend: {
@@ -69,4 +48,4 @@ class Chart extends Component {
   }
 }
 
-export default Chart;
+export default LineChart;

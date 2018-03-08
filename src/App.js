@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import Chart from './components/Chart';
+import LineChart from './components/LineChart';
+import BarChart from './components/BarChart';
 import Map from './components/Map';
 import axios from 'axios';
+import randomColor from 'randomcolor';
 
 class App extends Component {
   constructor() {
@@ -60,14 +62,20 @@ class App extends Component {
               {
                 label: key,
                 data: categories[key].hourData,
-                backgroundColor: colors[Math.floor(Math.random() * colors.length)]
+                backgroundColor: randomColor({
+                  luminosity: 'light',
+                  hue: 'orange'
+                })
               }
             );
             dataset2.push(
               {
                 label: key,
                 data: categories[key].dayData,
-                backgroundColor: colors[Math.floor(Math.random() * colors.length)]
+                backgroundColor: randomColor({
+                  luminosity: 'light',
+                  hue: 'orange'
+                })
               }
             );
           }
@@ -94,7 +102,8 @@ class App extends Component {
         <div className="App-header">
           <h1 className="App-title">San Francisco Crime Data</h1>
         </div>
-        <Chart chartData={this.state.chartData} chartData2={this.state.chartData2} legendPosition="right"/>
+        <LineChart chartData={this.state.chartData} chartTitle="Hourly Crime Rate" legendPosition="right"/>
+        <BarChart chartData={this.state.chartData2} chartTitle="Daily Crime Rate" legendPosition="right"/>
       </div>
     );
   }

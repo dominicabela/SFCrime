@@ -6,6 +6,8 @@
     "axios": "^0.18.0",
     "chart.js": "^2.7.2",
     "mapbox-gl": "^0.44.1",
+    "npm": "^5.7.1",
+    "randomcolor": "^0.5.3",
     "react": "^16.2.0",
     "react-chartjs-2": "^2.7.0",
     "react-dom": "^16.2.0",
