@@ -19,7 +19,7 @@ class App extends Component {
 
   getChartData() {
 
-    const url = 'https://raw.githubusercontent.com/dominicabela/SFCrime/master/crimeData.json';
+    const url = 'https://raw.githubusercontent.com/dominicabela/SFCrimeMap/master/crimeData.json?token=AThWsZPYJZb8L5sKOiLBmsf59ef-XX-1ks5aqiS2wA%3D%3D';
 
     const colors = ['rgba(169, 204, 227, 0.6)', 'rgba(163, 228, 215, 0.6)', 'rgba(162, 217, 206, 0.6)', 'rgba(169, 223, 191, 0.6)', 'rgba(171, 235, 198, 0.6)',
                     'rgba(249, 231, 159, 0.6)', 'rgba(250, 215, 160, 0.6)', 'rgba(245, 203, 167, 0.6)', 'rgba(237, 187, 153, 0.6)', 'rgba(230, 176, 170, 0.6)'];
