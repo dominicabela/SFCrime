@@ -31,6 +31,7 @@ class BarChart extends Component {
               display: this.props.displayLegend,
               position: this.props.legendPosition
             },
+            backgroundColor: "#F5DEB3",
             maintainAspectRatio: true,
       			spanGaps: false,
             scales: {

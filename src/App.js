@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import logo from './GitHub_Logo.png';
 import LineChart from './components/LineChart';
 import BarChart from './components/BarChart';
 import Map from './components/Map';
@@ -11,7 +12,8 @@ class App extends Component {
     super();
     this.state = {
       chartData: {},
-      chartData2: {}
+      chartData2: {},
+      loading: true
     }
   }
 
@@ -22,9 +24,6 @@ class App extends Component {
   getChartData() {
 
     const url = 'https://raw.githubusercontent.com/dominicabela/SFCrimeMap/master/crimeData.json?token=AThWsZPYJZb8L5sKOiLBmsf59ef-XX-1ks5aqiS2wA%3D%3D';
-
-    const colors = ['rgba(169, 204, 227, 0.6)', 'rgba(163, 228, 215, 0.6)', 'rgba(162, 217, 206, 0.6)', 'rgba(169, 223, 191, 0.6)', 'rgba(171, 235, 198, 0.6)',
-                    'rgba(249, 231, 159, 0.6)', 'rgba(250, 215, 160, 0.6)', 'rgba(245, 203, 167, 0.6)', 'rgba(237, 187, 153, 0.6)', 'rgba(230, 176, 170, 0.6)'];
 
     const dayLabels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -63,8 +62,9 @@ class App extends Component {
                 label: key,
                 data: categories[key].hourData,
                 backgroundColor: randomColor({
-                  luminosity: 'light',
-                  hue: 'orange'
+                  luminosity: 'bright',
+                  format: 'rgba',
+                  alpha: 1
                 })
               }
             );
@@ -73,13 +73,16 @@ class App extends Component {
                 label: key,
                 data: categories[key].dayData,
                 backgroundColor: randomColor({
-                  luminosity: 'light',
-                  hue: 'orange'
+                  luminosity: 'bright',
+                  format: 'rgba',
+                  alpha: 1
                 })
               }
             );
           }
         }
+        this.render();
+        this.setState({loading: false});
     })
 
     this.setState(
@@ -102,9 +105,22 @@ class App extends Component {
         <div className="App-header">
           <h1 className="App-title">San Francisco Crime Data</h1>
         </div>
-        <LineChart chartData={this.state.chartData} chartTitle="Hourly Crime Rate" legendPosition="right"/>
-        <BarChart chartData={this.state.chartData2} chartTitle="Daily Crime Rate" legendPosition="right"/>
-        <Map />
+        <div className="container">
+          <div className="canvas-container map-container round">
+            <Map className="map" />
+          </div>
+          <div className="canvas-container round">
+            <LineChart chartData={this.state.chartData} chartTitle="Hourly Crime Rate" legendPosition="right"/>
+          </div>
+          <div className="canvas-container round">
+            <BarChart chartData={this.state.chartData2} chartTitle="Daily Crime Rate" legendPosition="right"/>
+          </div>
+          <div className="logo">
+            <a href="https://github.com/dominicabela/SFCrime">
+              <p><img src={logo} alt="GitHub Logo" style={{width:"60px", height:"25px"}} /></p>
+            </a>
+          </div>
+        </div>
       </div>
     );
   }

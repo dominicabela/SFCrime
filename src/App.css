@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #777;
 }
 
 .App-header {
@@ -11,13 +12,34 @@
 
 .App-title {
   font-size: 4em;
+  padding: 3%;
 }
 
 .App-intro {
   font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.container {
+    background-color: #777;
+    width: 100%;
+}
+.canvas-container {
+    background-color: #EEE;
+    width: 90%;
+    margin: 5%;
+    position: relative;
+    padding: 3%;
+}
+
+.map-container {
+  height: 700px;
+}
+
+.map {
+  width: 500px;
+  height: 1000px;
+}
+
+.logo {
+  padding-bottom: 3%;
 }
