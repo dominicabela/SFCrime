@@ -119,8 +119,6 @@ class Map extends React.Component {
   }
 
   render() {
-    //const { lng, lat, zoom } = this.state;
-
     return (
       <div ref={el => this.mapContainer = el} className="col12 row15 pad0 center"/>
     );
