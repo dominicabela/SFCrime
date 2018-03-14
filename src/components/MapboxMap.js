@@ -2,12 +2,15 @@ import React from 'react';
 import ReactMapboxGl, { Layer, Source } from "react-mapbox-gl";
 
 const Map = ReactMapboxGl({
-  accessToken: "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA"
+  accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA'
 });
 
+// Get geojson data
 const geojson = require('./sfgeodata.geojson');
 
+// Style for cirle layer
 const circlePaint = {
+  // Increase size as zoom increases
   'circle-radius': [
     'interpolate',
     ['linear'],
@@ -16,12 +19,14 @@ const circlePaint = {
     5, 20
   ],
   'circle-color': 'rgb(170,80,72)',
+  // Decrease opacity as zoom decreases to transition to heatmap layer
   'circle-opacity': {
     stops: [
       [14, 0],
       [15, 1]
     ]
   },
+  // Increase stroke width as zoom increases
   'circle-stroke-width': [
     'interpolate',
     ['linear'],
@@ -30,6 +35,7 @@ const circlePaint = {
     5, 12
   ],
   'circle-stroke-color': 'rgb(200,100,90)',
+  // Increase stroke opacity as zoom increases
   'circle-stroke-opacity': {
     stops: [
       [14, 0],
@@ -38,8 +44,9 @@ const circlePaint = {
   }
 }
 
+// Style for heatmap layer
 const heatmapPaint = {
-  // increase weight as diameter breast height increases
+  // Increase weight as diameter breast height increases
   'heatmap-weight': {
     property: 'dbh',
     type: 'exponential',
@@ -48,14 +55,14 @@ const heatmapPaint = {
       [5, 2]
     ]
   },
-  // increase intensity as zoom level increases
+  // Increase intensity as zoom level increases
   'heatmap-intensity': {
     stops: [
       [0, 0],
       [5, 2]
     ]
   },
-  // assign color values be applied to points depending on their density
+  // Assign color values be applied to points depending on their density
   'heatmap-color': [
     'interpolate',
     ['linear'],
@@ -67,14 +74,14 @@ const heatmapPaint = {
     0.8, "rgb(239,138,98)",
     1, "rgb(178,24,43)"
   ],
-  // increase radius as zoom increases
+  // Increase radius as zoom increases
   'heatmap-radius': {
     stops: [
       [0, 1],
       [5, 10]
     ]
   },
-  // decrease opacity to transition into the circle layer
+  // Decrease opacity as zoom increases to transition to circle layer
   'heatmap-opacity': {
     default: 1,
     stops: [
@@ -89,20 +96,19 @@ class MapboxMap extends React.Component {
   constructor(props: Props) {
     super(props);
     this.state = {
-      mapData: props.mapData,
       lat: -122.3372706,
       lng: 37.7571310,
-      zoom: [11]
+      zoom: [11],
+      mapStyle: 'mapbox://styles/mapbox/dark-v9'
     };
   }
 
   render() {
-    console.log(this.state.mapData);
     return (
       <Map
-        style="mapbox://styles/mapbox/dark-v9"
+        style={this.state.mapStyle}
         containerStyle={{
-          height: "100%",
+          height: "85%",
           width: "100%"
         }}
         center={[this.state.lat, this.state.lng]}
@@ -120,6 +126,5 @@ class MapboxMap extends React.Component {
     );
   }
 }
-
 
 export default MapboxMap;

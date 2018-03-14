@@ -3,7 +3,6 @@ import './App.css';
 import logo from './GitHub_Logo.png';
 import LineChart from './components/LineChart';
 import BarChart from './components/BarChart';
-import Map from './components/Map';
 import MapboxMap from './components/MapboxMap';
 import axios from 'axios';
 import randomColor from 'randomcolor';
@@ -14,7 +13,6 @@ class App extends Component {
     this.state = {
       chartData: {},
       chartData2: {},
-      mapData: [],
       loading: true
     }
   }
@@ -29,13 +27,13 @@ class App extends Component {
 
     const dayLabels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-    const hourLabels = ['0.00', '1.00', '2.00', '3.00', '4.00', '5.00', '6.00', '7.00', '8.00', '9.00', '10.00', '11.00', '12.00',
-                      '13.00', '14.00', '15.00', '16.00', '17.00', '18.00', '19.00', '20.00', '21.00', '22.00', '23.00'];
+    const hourLabels = ['0.00', '1.00', '2.00', '3.00', '4.00', '5.00', '6.00', '7.00', '8.00', '9.00', '10.00', '11.00', '12.00', '13.00', '14.00', '15.00', '16.00', '17.00', '18.00', '19.00', '20.00', '21.00', '22.00', '23.00'];
 
+    // Keeps track of crime categories
     var categories = {};
-    var dataset = [];
-    var dataset2 = [];
-    var locations = [];
+
+    var hourDataset = [];
+    var dayDataset = [];
 
     axios.get(url)
       .then(response => {
@@ -43,17 +41,18 @@ class App extends Component {
         var responseData = response.data;
 
         for (var i = 0; i < responseData.length; i++) {
-
-          locations.push([parseFloat(responseData[i].latitude), parseFloat(responseData[i].longitude)]);
-
           if (categories.hasOwnProperty(responseData[i].category)) {
+            // Increment data array at proper location based on index of weekday/hour
             categories[responseData[i].category].dayData[dayLabels.indexOf(responseData[i].weekday)]++;
             categories[responseData[i].category].hourData[hourLabels.indexOf(responseData[i].hour)]++;
+          // If category does not exist yet, add it to categories
           } else {
+            // Create new category entry
             categories[responseData[i].category] = {
               dayData: [0, 0, 0, 0, 0, 0, 0],
               hourData: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             }
+            // Increment data array at proper location based on index of weekday/hour
             categories[responseData[i].category].dayData[dayLabels.indexOf(responseData[i].weekday)]++;
             categories[responseData[i].category].hourData[dayLabels.indexOf(responseData[i].hour)]++;
           }
@@ -61,8 +60,9 @@ class App extends Component {
         }
 
         for (var key in categories) {
+          // Ignores inhereted properties
           if (categories.hasOwnProperty(key)) {
-            dataset.push(
+            hourDataset.push(
               {
                 label: key,
                 data: categories[key].hourData,
@@ -73,7 +73,7 @@ class App extends Component {
                 })
               }
             );
-            dataset2.push(
+            dayDataset.push(
               {
                 label: key,
                 data: categories[key].dayData,
@@ -89,21 +89,20 @@ class App extends Component {
         // Re-render charts when data is loaded
         this.render();
         // Keep track of whether data is loading (can be used to add loading message)
-        this.setState({loading: false, mapData: locations});
-        //console.log(this.state.mapData);
+        this.setState({loading: false});
     })
 
+    // Updates state with retrieved data
     this.setState(
       {
         chartData: {
           labels: hourLabels,
-          datasets: dataset
+          datasets: hourDataset
         },
         chartData2: {
           labels: dayLabels,
-          datasets: dataset2
-        },
-        mapData: locations
+          datasets: dayDataset
+        }
       }
     );
   }
@@ -116,7 +115,8 @@ class App extends Component {
         </div>
         <div className="container">
           <div className="canvas-container map-container round">
-            <MapboxMap mapData={this.state.mapData} />
+            <h1 className="description"> Crime Locations </h1>
+            <MapboxMap />
           </div>
           <div className="canvas-container round">
             <LineChart chartData={this.state.chartData} chartTitle="Hourly Crime Rate" legendPosition="right"/>

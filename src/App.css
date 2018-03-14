@@ -31,8 +31,14 @@
 
 .map-container {
   height: 700px;
+  padding-top: 1%;
 }
 
 .logo {
   padding-bottom: 3%;
+}
+
+.description {
+  color: #666;
+  padding: 1%;
 }
