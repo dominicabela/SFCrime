@@ -34,7 +34,7 @@ class LineChart extends Component {
             maintainAspectRatio: true,
       			spanGaps: false,
             scales: {
-  						xAxes: [{
+              xAxes: [{
   							stacked: true,
   						}],
   						yAxes: [{
