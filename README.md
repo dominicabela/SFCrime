@@ -12,7 +12,7 @@ Hosted at: https://dominicabela.github.io/SFCrime/
 
 - Daily crime rate graph
 
-### Run it
+## Run it
 
     git clone https://github.com/dominicabela/SFCrime.git
 
