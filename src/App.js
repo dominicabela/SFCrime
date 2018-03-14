@@ -4,6 +4,7 @@ import logo from './GitHub_Logo.png';
 import LineChart from './components/LineChart';
 import BarChart from './components/BarChart';
 import Map from './components/Map';
+import MapboxMap from './components/MapboxMap';
 import axios from 'axios';
 import randomColor from 'randomcolor';
 
@@ -13,6 +14,7 @@ class App extends Component {
     this.state = {
       chartData: {},
       chartData2: {},
+      mapData: [],
       loading: true
     }
   }
@@ -22,7 +24,7 @@ class App extends Component {
   }
 
   getChartData() {
-
+    // JSON file with crime data
     const url = 'https://raw.githubusercontent.com/dominicabela/SFCrimeMap/master/crimeData.json?token=AThWsZPYJZb8L5sKOiLBmsf59ef-XX-1ks5aqiS2wA%3D%3D';
 
     const dayLabels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -33,6 +35,7 @@ class App extends Component {
     var categories = {};
     var dataset = [];
     var dataset2 = [];
+    var locations = [];
 
     axios.get(url)
       .then(response => {
@@ -40,6 +43,8 @@ class App extends Component {
         var responseData = response.data;
 
         for (var i = 0; i < responseData.length; i++) {
+
+          locations.push([parseFloat(responseData[i].latitude), parseFloat(responseData[i].longitude)]);
 
           if (categories.hasOwnProperty(responseData[i].category)) {
             categories[responseData[i].category].dayData[dayLabels.indexOf(responseData[i].weekday)]++;
@@ -81,8 +86,11 @@ class App extends Component {
             );
           }
         }
+        // Re-render charts when data is loaded
         this.render();
-        this.setState({loading: false});
+        // Keep track of whether data is loading (can be used to add loading message)
+        this.setState({loading: false, mapData: locations});
+        //console.log(this.state.mapData);
     })
 
     this.setState(
@@ -94,7 +102,8 @@ class App extends Component {
         chartData2: {
           labels: dayLabels,
           datasets: dataset2
-        }
+        },
+        mapData: locations
       }
     );
   }
@@ -107,7 +116,7 @@ class App extends Component {
         </div>
         <div className="container">
           <div className="canvas-container map-container round">
-            <Map className="map" />
+            <MapboxMap mapData={this.state.mapData} />
           </div>
           <div className="canvas-container round">
             <LineChart chartData={this.state.chartData} chartTitle="Hourly Crime Rate" legendPosition="right"/>

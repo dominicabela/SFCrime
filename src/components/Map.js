@@ -9,20 +9,19 @@ class Map extends React.Component {
   constructor(props: Props) {
     super(props);
     this.state = {
-      lng: 5,
-      lat: 34,
-      zoom: 1.5
+      lng: 37.7571310,
+      lat: -122.3372706,
+      zoom: 11
     };
   }
 
   componentDidMount() {
-    const { lng, lat, zoom } = this.state;
 
     const map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/mapbox/dark-v9',
-      center: [-122.3372706, 37.7571310],
-      zoom: 11
+      center: [this.state.lat, this.state.lng],
+      zoom: this.state.zoom
     });
 
     map.on('load', function() {
@@ -120,7 +119,7 @@ class Map extends React.Component {
 
   render() {
     return (
-      <div ref={el => this.mapContainer = el} className="col12 row15 pad0 center"/>
+      <div ref={el => this.mapContainer = el} className="col12 row15"/>
     );
   }
 }

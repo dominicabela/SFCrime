@@ -5,14 +5,12 @@
 
 .App-header {
   background-color: #444;
-  height: 150px;
-  padding: 20px;
+  padding: 1%;
   color: white;
 }
 
 .App-title {
   font-size: 4em;
-  padding: 3%;
 }
 
 .App-intro {
@@ -21,7 +19,7 @@
 
 .container {
     background-color: #777;
-    width: 100%;
+    width: 95%;
 }
 .canvas-container {
     background-color: #EEE;
@@ -33,11 +31,6 @@
 
 .map-container {
   height: 700px;
-}
-
-.map {
-  width: 500px;
-  height: 1000px;
 }
 
 .logo {
