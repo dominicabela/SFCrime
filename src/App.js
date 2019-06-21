@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import './App.css';
-import logo from './GitHub_Logo.png';
 import LineChart from './components/LineChart';
 import BarChart from './components/BarChart';
 import MapboxMap from './components/MapboxMap';
 import axios from 'axios';
 import randomColor from 'randomcolor';
+
+import { Grid, Segment } from 'semantic-ui-react'
+
+import 'semantic-ui-css/semantic.min.css'
 
 class App extends Component {
   constructor() {
@@ -23,7 +25,7 @@ class App extends Component {
 
   getChartData() {
     // JSON file with crime data
-    const url = 'https://raw.githubusercontent.com/dominicabela/SFCrimeMap/master/crimeData.json?token=AThWsZPYJZb8L5sKOiLBmsf59ef-XX-1ks5aqiS2wA%3D%3D';
+    const url = 'https://raw.githubusercontent.com/dominicabela/SFCrimeMap/master/crimeData.json?token=AThWsTi5cMF6k0mAYDcevvmkyuMMnqLsks5atWjIwA%3D%3D';
 
     const dayLabels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -56,7 +58,6 @@ class App extends Component {
             categories[responseData[i].category].dayData[dayLabels.indexOf(responseData[i].weekday)]++;
             categories[responseData[i].category].hourData[dayLabels.indexOf(responseData[i].hour)]++;
           }
-
         }
 
         for (var key in categories) {
@@ -110,26 +111,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <h1 className="App-title">San Francisco Crime Data</h1>
-        </div>
-        <div className="container">
-          <div className="canvas-container map-container round">
-            <h1 className="description"> Crime Locations </h1>
-            <MapboxMap />
-          </div>
-          <div className="canvas-container round">
-            <LineChart chartData={this.state.chartData} chartTitle="Hourly Crime Rate" legendPosition="right"/>
-          </div>
-          <div className="canvas-container round">
-            <BarChart chartData={this.state.chartData2} chartTitle="Daily Crime Rate" legendPosition="right"/>
-          </div>
-          <div className="logo">
-            <a href="https://github.com/dominicabela/SFCrime">
-              <p><img src={logo} alt="GitHub Logo" style={{width:"60px", height:"25px"}} /></p>
-            </a>
-          </div>
-        </div>
+        <Grid columns={2}>
+        <Grid.Column>
+          <MapboxMap />
+        </Grid.Column>
+        <Grid.Column>
+          <LineChart chartData={this.state.chartData} chartTitle="Hourly Crime Rate" legendPosition="right"/>
+          <BarChart chartData={this.state.chartData2} chartTitle="Daily Crime Rate" legendPosition="right"/>
+        </Grid.Column>
+        </Grid>
       </div>
     );
   }
