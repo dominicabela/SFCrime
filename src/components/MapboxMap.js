@@ -93,12 +93,12 @@ const heatmapPaint = {
 
 class MapboxMap extends React.Component {
 
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
     this.state = {
-      lat: -122.3372706,
+      lat: -122.437710,
       lng: 37.7571310,
-      zoom: [11],
+      zoom: [11.5],
       mapStyle: 'mapbox://styles/mapbox/dark-v9'
     };
   }
@@ -108,8 +108,8 @@ class MapboxMap extends React.Component {
       <Map
         style={this.state.mapStyle}
         containerStyle={{
-          height: "85%",
-          width: "100%"
+          height: "100vh",
+          width: "50vw"
         }}
         center={[this.state.lat, this.state.lng]}
         zoom={this.state.zoom}>
