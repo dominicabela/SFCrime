@@ -25,7 +25,7 @@ class LineChart extends Component {
             title: {
               display: this.props.displayTitle,
               text: this.props.chartTitle,
-              fontSize: 25,
+              fontSize: 15,
             },
             legend: {
               display: this.props.displayLegend,

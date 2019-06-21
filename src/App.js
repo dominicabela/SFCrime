@@ -110,7 +110,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div style={{ backgroundColor:'#333' }}>
         <Grid columns={2}>
         <Grid.Column>
           <MapboxMap />

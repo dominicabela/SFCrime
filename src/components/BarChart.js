@@ -13,7 +13,7 @@ class BarChart extends Component {
     chartTitle: 'chart',
     displayTitle: true,
     displayLegend: true,
-    legendPosition: 'right'
+    legendPosition: 'right',
   }
 
   render() {
@@ -25,13 +25,12 @@ class BarChart extends Component {
             title: {
               display: this.props.displayTitle,
               text: this.props.chartTitle,
-              fontSize: 25,
+              fontSize: 15,
             },
             legend: {
               display: this.props.displayLegend,
               position: this.props.legendPosition
             },
-            backgroundColor: "#F5DEB3",
             maintainAspectRatio: true,
       			spanGaps: false,
             scales: {
